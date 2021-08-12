@@ -35,6 +35,9 @@ class BattleOfTheGalaxies:
             self.spaceShip.moving_right = True
         elif event.key == pygame.K_LEFT:
             self.spaceShip.moving_left = True
+        # pressing q to exit
+        elif event.key == pygame.K_q:
+            sys.exit()
 
     def check_keyup_events(self,event):
         """responding to key releases"""
