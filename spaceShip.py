@@ -9,7 +9,7 @@ class SpaceShip:
         self.screen_rect = ai_game.screen.get_rect()
 
         # loading image of spaceship
-        self.image = pygame.image.load('Images/2.bmp')
+        self.image = pygame.image.load('Images/4.bmp')
         self.rect = self.image.get_rect()
 
         # setting the starting point of the spaceship

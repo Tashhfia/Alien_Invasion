@@ -14,6 +14,7 @@ class BattleOfTheGalaxies:
                                                self.settings.screen_height))
         # title
         pygame.display.set_caption("BATTLE OF THE GALAXIES")
+        self.spaceShip = SpaceShip(self)
 
 
     def run(self):
@@ -26,6 +27,8 @@ class BattleOfTheGalaxies:
 
                 # redraw screen through each pass of loop
                 self.screen.fill(self.settings.bg_color)
+                self.spaceShip.blitme()
+
                 # making the most recent screen visible
                 pygame.display.flip()
 
