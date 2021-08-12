@@ -24,16 +24,25 @@ class BattleOfTheGalaxies:
                 sys.exit()
             # Key is pressed
             elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_RIGHT:
-                    self.spaceShip.moving_right = True
-                elif event.key == pygame.K_LEFT:
-                    self.spaceShip.moving_left = True
+                self.check_keydown_events(event)
             # key is released
             elif event.type == pygame.KEYUP:
-                if event.key == pygame.K_RIGHT:
-                    self.spaceShip.moving_right = False
-                elif event.key == pygame.K_LEFT:
-                    self.spaceShip.moving_left = False
+                self.check_keyup_events(event)
+
+    def check_keydown_events(self,event):
+        """"responding to key presses"""
+        if event.key == pygame.K_RIGHT:
+            self.spaceShip.moving_right = True
+        elif event.key == pygame.K_LEFT:
+            self.spaceShip.moving_left = True
+
+    def check_keyup_events(self,event):
+        """responding to key releases"""
+        if event.key == pygame.K_RIGHT:
+            self.spaceShip.moving_right = False
+        elif event.key == pygame.K_LEFT:
+            self.spaceShip.moving_left = False
+
 
     def run(self):
         while True:
