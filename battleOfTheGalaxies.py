@@ -12,6 +12,10 @@ class BattleOfTheGalaxies:
         self.settings = Settings()
         self.screen = pygame.display.set_mode((self.settings.screen_width,
                                                self.settings.screen_height))
+        # full screen
+        # self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+        # self.settings.screen_width = self.screen.get_rect().width
+        # self.settings.screen_height = self.screen.get_rect().height
         # setting the title of the game
         pygame.display.set_caption("BATTLE OF THE GALAXIES")
         self.spaceShip = SpaceShip(self)
@@ -38,6 +42,20 @@ class BattleOfTheGalaxies:
         # pressing q to exit
         elif event.key == pygame.K_q:
             sys.exit()
+        # enter full screen
+        elif event.key == pygame.K_f:
+            alreadyFullScreen = False
+            if not alreadyFullScreen:
+                self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+                self.settings.screen_width = self.screen.get_rect().width
+                self.settings.screen_height = self.screen.get_rect().height
+                alreadyFullScreen = True
+            # if alreadyFullScreen:
+            #     self.settings = Settings()
+            #     self.screen = pygame.display.set_mode((self.settings.screen_width,
+            #                                            self.settings.screen_height))
+
+
 
     def check_keyup_events(self,event):
         """responding to key releases"""
