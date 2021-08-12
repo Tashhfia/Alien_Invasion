@@ -15,6 +15,17 @@ class SpaceShip:
         # setting the starting point of the spaceship
         self.rect.midbottom = self.screen_rect.midbottom
 
+        # Movement flag
+        self.moving_right = False
+        self.moving_left = False
+
+    def update(self):
+        if self.moving_right:
+            self.rect.x += 1
+        if self.moving_left:
+            self.rect.x -= 1
+
+
     def blitme(self):
         """"Function to draw the spaceship at its current location"""
         self.screen.blit(self.image, self.rect)

@@ -8,11 +8,11 @@ class BattleOfTheGalaxies:
     # initialize background settings
     def __init__(self):
         pygame.init()
-        # screen size
+        # getting screen size from settings module
         self.settings = Settings()
         self.screen = pygame.display.set_mode((self.settings.screen_width,
                                                self.settings.screen_height))
-        # title
+        # setting the title of the game
         pygame.display.set_caption("BATTLE OF THE GALAXIES")
         self.spaceShip = SpaceShip(self)
 
@@ -22,12 +22,25 @@ class BattleOfTheGalaxies:
             # exits the game
             if event.type == pygame.QUIT:
                 sys.exit()
+            # Key is pressed
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_RIGHT:
+                    self.spaceShip.moving_right = True
+                elif event.key == pygame.K_LEFT:
+                    self.spaceShip.moving_left = True
+            # key is released
+            elif event.type == pygame.KEYUP:
+                if event.key == pygame.K_RIGHT:
+                    self.spaceShip.moving_right = False
+                elif event.key == pygame.K_LEFT:
+                    self.spaceShip.moving_left = False
 
     def run(self):
         while True:
             # checking for the events
             self._check_events()
             self._update_screen()
+            self.spaceShip.update()
 
     def _update_screen(self):
         """Updates the images on the screen and flips to new screen"""
