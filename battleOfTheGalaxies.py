@@ -28,12 +28,8 @@ class BattleOfTheGalaxies:
             # checking for the events
             self._check_events()
             self.spaceShip.update()
-            self.bullets.update()
+            self.update_bullets()
             self._update_screen()
-
-            for bullet in self.bullets.copy():
-                if bullet.rect.bottom <= 0:
-                    self.bullets.remove(bullet)
 
     def _update_screen(self):
         """Updates the images on the screen and flips to new screen"""
@@ -46,6 +42,13 @@ class BattleOfTheGalaxies:
 
         # making the most recent screen visible
         pygame.display.flip()
+
+    def update_bullets(self):
+        self.bullets.update()
+        for bullet in self.bullets.copy():
+            if bullet.rect.bottom <= 0:
+                self.bullets.remove(bullet)
+
 
     def _check_events(self):
         """"Respond to keyboard and mouse events"""
@@ -88,8 +91,9 @@ class BattleOfTheGalaxies:
 
     def fire_bullet(self):
         """creating new bullet"""
-        new_bullet = Bullet(self)
-        self.bullets.add(new_bullet)
+        if len(self.bullets) < self.settings.bullets_allowed:
+            new_bullet = Bullet(self)
+            self.bullets.add(new_bullet)
 
     def check_keyup_events(self,event):
         """responding to key releases"""
