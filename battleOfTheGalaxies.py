@@ -16,7 +16,6 @@ class BattleOfTheGalaxies:
         pygame.display.set_caption("BATTLE OF THE GALAXIES")
         self.spaceShip = SpaceShip(self)
 
-
     def _check_events(self):
         """"Respond to keyboard and mouse events"""
         for event in pygame.event.get():
@@ -24,18 +23,21 @@ class BattleOfTheGalaxies:
             if event.type == pygame.QUIT:
                 sys.exit()
 
-
     def run(self):
         while True:
             # checking for the events
             self._check_events()
+            self._update_screen()
 
-            # redraw screen through each pass of loop
-            self.screen.fill(self.settings.bg_color)
-            self.spaceShip.blitme()
+    def _update_screen(self):
+        """Updates the images on the screen and flips to new screen"""
 
-            # making the most recent screen visible
-            pygame.display.flip()
+        # redraw screen through each pass of loop
+        self.screen.fill(self.settings.bg_color)
+        self.spaceShip.blitme()
+
+        # making the most recent screen visible
+        pygame.display.flip()
 
 
 if __name__ == '__main__':
