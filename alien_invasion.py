@@ -16,3 +16,10 @@ class AlienInvasion:
                 # exits the game
                 if event.type == pygame.QUIT:
                     sys.exit()
+                # making the most recent screen visible
+                pygame.display.flip()
+
+
+if __name__ == '__main__':
+    ai = AlienInvasion()
+    ai.run()
