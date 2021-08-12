@@ -2,6 +2,7 @@ import sys
 import pygame
 from settings import Settings
 from spaceShip import SpaceShip
+from bullet import Bullet
 
 
 class BattleOfTheGalaxies:
@@ -19,6 +20,27 @@ class BattleOfTheGalaxies:
         # setting the title of the game
         pygame.display.set_caption("BATTLE OF THE GALAXIES")
         self.spaceShip = SpaceShip(self)
+        self.bullets = pygame.sprite.Group()
+
+    def run(self):
+        while True:
+            # checking for the events
+            self._check_events()
+            self.spaceShip.update()
+            self.bullets.update()
+            self._update_screen()
+
+    def _update_screen(self):
+        """Updates the images on the screen and flips to new screen"""
+
+        # redraw screen through each pass of loop
+        self.screen.fill(self.settings.bg_color)
+        self.spaceShip.blitme()
+        for bullet in self.bullets.sprites():
+            bullet.draw_bullet()
+
+        # making the most recent screen visible
+        pygame.display.flip()
 
     def _check_events(self):
         """"Respond to keyboard and mouse events"""
@@ -42,6 +64,10 @@ class BattleOfTheGalaxies:
         # pressing q to exit
         elif event.key == pygame.K_q:
             sys.exit()
+        # firing bullets with space
+        elif event.key == pygame.K_SPACE:
+            self.fire_bullet()
+
         # enter full screen
         elif event.key == pygame.K_f:
             alreadyFullScreen = False
@@ -55,7 +81,10 @@ class BattleOfTheGalaxies:
             #     self.screen = pygame.display.set_mode((self.settings.screen_width,
             #                                            self.settings.screen_height))
 
-
+    def fire_bullet(self):
+        """creating new bullet"""
+        new_bullet = Bullet(self)
+        self.bullets.add(new_bullet)
 
     def check_keyup_events(self,event):
         """responding to key releases"""
@@ -63,24 +92,6 @@ class BattleOfTheGalaxies:
             self.spaceShip.moving_right = False
         elif event.key == pygame.K_LEFT:
             self.spaceShip.moving_left = False
-
-
-    def run(self):
-        while True:
-            # checking for the events
-            self._check_events()
-            self._update_screen()
-            self.spaceShip.update()
-
-    def _update_screen(self):
-        """Updates the images on the screen and flips to new screen"""
-
-        # redraw screen through each pass of loop
-        self.screen.fill(self.settings.bg_color)
-        self.spaceShip.blitme()
-
-        # making the most recent screen visible
-        pygame.display.flip()
 
 
 if __name__ == '__main__':

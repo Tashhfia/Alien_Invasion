@@ -6,7 +6,7 @@ class Bullet(Sprite):
     """A class to manage bullets"""
 
     def __init__(self, ai_game):
-        super().init()
+        super().__init__()
         self.screen = ai_game.screen
         self.settings = ai_game.settings
         self.color = self.settings.bullet_color
@@ -18,3 +18,12 @@ class Bullet(Sprite):
 
         # store bullet's position as decimal value
         self.y = float(self.rect.y)
+
+    def update(self):
+        """moving the bullet"""
+        self.y -= self.settings.bullet_speed
+        self.rect.y = self.y
+
+    def draw_bullet(self):
+        """draw bullets"""
+        pygame.draw.rect(self.screen, self.color, self.rect)
