@@ -1,5 +1,6 @@
 import sys
 import pygame
+from Settings import Settings
 
 
 class AlienInvasion:
@@ -7,11 +8,13 @@ class AlienInvasion:
     def __init__(self):
         pygame.init()
         # screen size
-        self.screen = pygame.display.set_mode((1300, 900))
+        self.settings = Settings()
+        self.screen = pygame.display.set_mode((self.settings.screen_width,
+                                               self.settings.screen_height))
         # title
         pygame.display.set_caption("Attack of the Aliens")
         # background color
-        self.bg_color = (11, 1, 69)
+        # self.bg_color = (11, 1, 69)
 
 
     def run(self):
@@ -21,6 +24,9 @@ class AlienInvasion:
                 # exits the game
                 if event.type == pygame.QUIT:
                     sys.exit()
+
+                # redraw screen through each pass of loop
+                self.screen.fill(self.settings.bg_color)
                 # making the most recent screen visible
                 pygame.display.flip()
 
