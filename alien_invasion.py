@@ -6,8 +6,13 @@ class AlienInvasion:
     # initialize background settings
     def __init__(self):
         pygame.init()
+        # screen size
         self.screen = pygame.display.set_mode((1300, 900))
+        # title
         pygame.display.set_caption("Attack of the Aliens")
+        # background color
+        self.bg_color = (11, 1, 69)
+
 
     def run(self):
         while True:
