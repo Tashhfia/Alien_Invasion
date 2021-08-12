@@ -21,6 +21,7 @@ class BattleOfTheGalaxies:
         pygame.display.set_caption("BATTLE OF THE GALAXIES")
         self.spaceShip = SpaceShip(self)
         self.bullets = pygame.sprite.Group()
+        self.isFullScreen = False
 
     def run(self):
         while True:
@@ -29,6 +30,10 @@ class BattleOfTheGalaxies:
             self.spaceShip.update()
             self.bullets.update()
             self._update_screen()
+
+            for bullet in self.bullets.copy():
+                if bullet.rect.bottom <= 0:
+                    self.bullets.remove(bullet)
 
     def _update_screen(self):
         """Updates the images on the screen and flips to new screen"""
@@ -70,16 +75,16 @@ class BattleOfTheGalaxies:
 
         # enter full screen
         elif event.key == pygame.K_f:
-            alreadyFullScreen = False
-            if not alreadyFullScreen:
+            if not self.isFullScreen:
                 self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
                 self.settings.screen_width = self.screen.get_rect().width
                 self.settings.screen_height = self.screen.get_rect().height
-                alreadyFullScreen = True
-            # if alreadyFullScreen:
+                self.isFullScreen = True
+            # if self.isFullScreen:
             #     self.settings = Settings()
             #     self.screen = pygame.display.set_mode((self.settings.screen_width,
             #                                            self.settings.screen_height))
+            #     self.isFullScreen = False
 
     def fire_bullet(self):
         """creating new bullet"""
