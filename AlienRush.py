@@ -130,6 +130,7 @@ class AlienRush:
             self.stats.reset_stats()
             self.stats.game_active = True
             self.sb.prep_score()
+            self.sb.prep_spaceShips_left()
             pygame.mouse.set_visible(False)
 
             self.aliens.empty()
@@ -222,6 +223,7 @@ class AlienRush:
     def spaceShip_hit(self):
         if self.stats.spaceShips_left > 0:
             self.stats.spaceShips_left -= 1
+            self.sb.prep_spaceShips_left()
             # Get rid of any remaining aliens and bullets
             self.aliens.empty()
             self.bullets.empty()

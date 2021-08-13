@@ -1,13 +1,18 @@
 import pygame.font
+from pygame.sprite import Group
+
+from spaceShip import SpaceShip
 
 
 class Scoreboard:
     def __init__(self, ai_game):
         """Initialize score-keeping attributes."""
+        self.ai_game = ai_game
         self.screen = ai_game.screen
         self.screen_rect = self.screen.get_rect()
         self.settings = ai_game.settings
         self.stats = ai_game.stats
+        self.prep_spaceShips_left()
 
         self.text_color = (61, 235, 52)
         self.font = pygame.font.SysFont(None, 48)
@@ -27,6 +32,7 @@ class Scoreboard:
         """Draw score to the screen."""
         self.screen.blit(self.score_image, self.score_rect)
         self.screen.blit(self.high_score_image, self.high_score_rect)
+        self.spaceShips.draw(self.screen)
 
     def prep_high_score(self):
         high_score = round(self.stats.high_score, -1)
@@ -44,6 +50,15 @@ class Scoreboard:
         if self.stats.score > self.stats.high_score:
             self.stats.high_score = self.stats.score
         self.prep_high_score()
+
+    def prep_spaceShips_left(self):
+        self.spaceShips = Group()
+        for spaceShip_num in range(self.stats.spaceShips_left):
+            spaceShip = SpaceShip(self.ai_game)
+            spaceShip.rect.x = 10 + spaceShip_num * spaceShip.rect.width
+            spaceShip.rect.y = 10
+            self.spaceShips.add(spaceShip)
+
 
 
 
