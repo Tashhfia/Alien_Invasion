@@ -33,7 +33,6 @@ class SpaceShip:
             self.x -= self.settings.spaceShip_speed
         self.rect.x = self.x
 
-
     def blitme(self):
         """"Function to draw the spaceship at its current location"""
         self.screen.blit(self.image, self.rect)

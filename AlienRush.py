@@ -3,6 +3,7 @@ import pygame
 from settings import Settings
 from spaceShip import SpaceShip
 from bullet import Bullet
+from alien import Alien
 
 
 class AlienRush:
@@ -17,10 +18,17 @@ class AlienRush:
         # self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
         # self.settings.screen_width = self.screen.get_rect().width
         # self.settings.screen_height = self.screen.get_rect().height
+
         # setting the title of the game
         pygame.display.set_caption("Alien Rush")
+        # adding spaceship
         self.spaceShip = SpaceShip(self)
+        # adding bullets
         self.bullets = pygame.sprite.Group()
+        # adding aliens
+        self.aliens = pygame.sprite.Group()
+        self.create_alien_fleet()
+
         self.isFullScreen = False
 
     def run(self):
@@ -39,6 +47,7 @@ class AlienRush:
         self.spaceShip.blitme()
         for bullet in self.bullets.sprites():
             bullet.draw_bullet()
+        self.aliens.draw(self.screen)
 
         # making the most recent screen visible
         pygame.display.flip()
@@ -100,6 +109,11 @@ class AlienRush:
             self.spaceShip.moving_right = False
         elif event.key == pygame.K_LEFT:
             self.spaceShip.moving_left = False
+
+    def create_alien_fleet(self):
+        """Creates a fleet of aliens"""
+        alien = Alien(self)
+        self.aliens.add(alien)
 
 
 if __name__ == '__main__':
