@@ -117,9 +117,19 @@ class AlienRush:
         pygame.display.flip()
 
     def check_play_button(self, mouse_pos):
-        if self.play_button.rect.collidepoint(mouse_pos):
+        button_clicked = self.play_button.rect.collidepoint(mouse_pos)
+        if button_clicked and not self.stats.game_active:
+            # reset
+            self.stats.reset_stats()
             self.stats.game_active = True
+            pygame.mouse.set_visible(False)
 
+            self.aliens.empty()
+            self.bullets.empty()
+
+            # create new fleet
+            self.create_alien_fleet()
+            self.spaceShip.center_spaceShip()
 
     def update_bullets(self):
         self.bullets.update()
@@ -206,6 +216,7 @@ class AlienRush:
             sleep(.6)  # pause
         else:
             self.stats.game_active = False
+            pygame.mouse.set_visible(True)
 
     def check_aliens_bottom(self):
         screen_rect = self.screen.get_rect()
