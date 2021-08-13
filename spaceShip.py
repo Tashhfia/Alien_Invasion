@@ -9,6 +9,10 @@ class SpaceShip:
         self.screen_rect = ai_game.screen.get_rect()
         self.settings = ai_game.settings
 
+        """image retrieved from Image by <a href="https://pixabay.com/users/openclipart-vectors-30363/?
+        utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1300540">
+        OpenClipart-Vectors</a> from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;
+        utm_campaign=image&amp;utm_content=1300540">Pixabay</a>"""
         # loading image of spaceship
         self.image = pygame.image.load('Images/4.bmp')
         self.rect = self.image.get_rect()
