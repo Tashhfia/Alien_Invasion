@@ -16,6 +16,7 @@ class Settings:
         self.bullets_allowed = 4
 
         self.speed_up = 1.1
+        self.score_increment = 1.5
         self.initialize_dynamic_settings
 
         # Alien settings
@@ -35,4 +36,6 @@ class Settings:
         self.spaceShip_speed *= self.speed_up
         self.bullet_speed *= self.speed_up
         self.alien_speed *= self.speed_up
+        # increase score with speed
+        self.alien_points = int(self.alien_points * self.score_increment)
 
