@@ -16,7 +16,7 @@ class SpaceShip(Sprite):
         OpenClipart-Vectors</a> from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;
         utm_campaign=image&amp;utm_content=1300540">Pixabay</a>"""
         # loading image of spaceship
-        self.image = pygame.image.load('Images/4.bmp')
+        self.image = pygame.image.load('Images/3.bmp')
         self.rect = self.image.get_rect()
 
         # setting the starting point of the spaceship
