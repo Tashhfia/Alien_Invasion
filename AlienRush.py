@@ -52,6 +52,9 @@ class AlienRush:
             # key is released
             elif event.type == pygame.KEYUP:
                 self.check_keyup_events(event)
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                mouse_pos = pygame.mouse.get_pos()
+                self.check_play_button(mouse_pos)
 
     def check_keyup_events(self,event):
         """responding to key releases"""
@@ -112,6 +115,11 @@ class AlienRush:
 
         # making the most recent screen visible
         pygame.display.flip()
+
+    def check_play_button(self, mouse_pos):
+        if self.play_button.rect.collidepoint(mouse_pos):
+            self.stats.game_active = True
+
 
     def update_bullets(self):
         self.bullets.update()
