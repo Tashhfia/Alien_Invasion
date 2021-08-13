@@ -31,38 +31,6 @@ class AlienRush:
 
         self.isFullScreen = False
 
-    def run(self):
-        while True:
-            # checking for the events
-            self._check_events()
-            self.spaceShip.update()
-            self.update_bullets()
-            self.update_aliens()
-            self._update_screen()
-
-    def _update_screen(self):
-        """Updates the images on the screen and flips to new screen"""
-
-        # redraw screen through each pass of loop
-        self.screen.fill(self.settings.bg_color)
-        self.spaceShip.blitme()
-        for bullet in self.bullets.sprites():
-            bullet.draw_bullet()
-        self.aliens.draw(self.screen)
-
-        # making the most recent screen visible
-        pygame.display.flip()
-
-    def update_bullets(self):
-        self.bullets.update()
-        for bullet in self.bullets.copy():
-            if bullet.rect.bottom <= 0:
-                self.bullets.remove(bullet)
-        # Check for any bullets that have hit aliens.
-        # If so, get rid of the bullet and the alien.
-        collisions = pygame.sprite.groupcollide(
-            self.bullets, self.aliens, True, True)
-
     def _check_events(self):
         """"Respond to keyboard and mouse events"""
         for event in pygame.event.get():
@@ -75,6 +43,13 @@ class AlienRush:
             # key is released
             elif event.type == pygame.KEYUP:
                 self.check_keyup_events(event)
+
+    def check_keyup_events(self,event):
+        """responding to key releases"""
+        if event.key == pygame.K_RIGHT:
+            self.spaceShip.moving_right = False
+        elif event.key == pygame.K_LEFT:
+            self.spaceShip.moving_left = False
 
     def check_keydown_events(self,event):
         """"responding to key presses"""
@@ -102,18 +77,49 @@ class AlienRush:
             #                                            self.settings.screen_height))
             #     self.isFullScreen = False
 
+    def run(self):
+        while True:
+            # checking for the events
+            self._check_events()
+            self.spaceShip.update()
+            self.update_bullets()
+            self.update_aliens()
+            self._update_screen()
+
+    def _update_screen(self):
+        """Updates the images on the screen and flips to new screen"""
+
+        # redraw screen through each pass of loop
+        self.screen.fill(self.settings.bg_color)
+        self.spaceShip.blitme()
+        for bullet in self.bullets.sprites():
+            bullet.draw_bullet()
+        self.aliens.draw(self.screen)
+
+        # making the most recent screen visible
+        pygame.display.flip()
+
+    def update_bullets(self):
+        self.bullets.update()
+        for bullet in self.bullets.copy():
+            if bullet.rect.bottom <= 0:
+                self.bullets.remove(bullet)
+        self.check_bullet_alien_collision()
+
+    def check_bullet_alien_collision(self):
+        collisions = pygame.sprite.groupcollide(
+            self.bullets, self.aliens, True, True
+        )
+        if not self.aliens:
+            # Destroy existing bullets and create new fleet.
+            self.bullets.empty()
+            self.create_alien_fleet()
+
     def fire_bullet(self):
         """creating new bullet"""
         if len(self.bullets) < self.settings.bullets_allowed:
             new_bullet = Bullet(self)
             self.bullets.add(new_bullet)
-
-    def check_keyup_events(self,event):
-        """responding to key releases"""
-        if event.key == pygame.K_RIGHT:
-            self.spaceShip.moving_right = False
-        elif event.key == pygame.K_LEFT:
-            self.spaceShip.moving_left = False
 
     def create_alien_fleet(self):
         """Creates a fleet of aliens"""
