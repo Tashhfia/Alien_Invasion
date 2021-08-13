@@ -105,10 +105,11 @@ class AlienRush:
 
         # redraw screen through each pass of loop
         self.screen.fill(self.settings.bg_color)
-        self.spaceShip.blitme()
-        for bullet in self.bullets.sprites():
-            bullet.draw_bullet()
-        self.aliens.draw(self.screen)
+        if self.stats.game_active:
+            self.spaceShip.blitme()
+            for bullet in self.bullets.sprites():
+                bullet.draw_bullet()
+            self.aliens.draw(self.screen)
 
         if not self.stats.game_active:
             self.play_button.draw_button()
@@ -119,7 +120,8 @@ class AlienRush:
     def check_play_button(self, mouse_pos):
         button_clicked = self.play_button.rect.collidepoint(mouse_pos)
         if button_clicked and not self.stats.game_active:
-            # reset
+            self.settings.initialize_dynamic_settings()
+            # reset stats
             self.stats.reset_stats()
             self.stats.game_active = True
             pygame.mouse.set_visible(False)
@@ -146,6 +148,7 @@ class AlienRush:
             # Destroy existing bullets and create new fleet.
             self.bullets.empty()
             self.create_alien_fleet()
+            self.settings.increase_speed()
 
     def fire_bullet(self):
         """creating new bullet"""

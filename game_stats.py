@@ -8,3 +8,4 @@ class GameStats:
 
     def reset_stats(self):
         self.spaceShips_left = self.settings.spaceShip_limit
+        self.score = 0
