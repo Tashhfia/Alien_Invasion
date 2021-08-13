@@ -87,9 +87,11 @@ class AlienRush:
         while True:
             # checking for the events
             self._check_events()
-            self.spaceShip.update()
-            self.update_bullets()
-            self.update_aliens()
+            if self.stats.game_active:
+                self.spaceShip.update()
+                self.update_bullets()
+                self.update_aliens()
+
             self._update_screen()
 
     def _update_screen(self):
@@ -176,16 +178,28 @@ class AlienRush:
         # Looking for alien and spaceship collision
         if pygame.sprite.spritecollideany(self.spaceShip, self.aliens):
             self.spaceShip_hit()
+        self.check_aliens_bottom()
 
     def spaceShip_hit(self):
-        self.stats.spaceShips_left -= 1
-        # Get rid of any remaining aliens and bullets
-        self.aliens.empty()
-        self.bullets.empty()
+        if self.stats.spaceShips_left > 0:
+            self.stats.spaceShips_left -= 1
+            # Get rid of any remaining aliens and bullets
+            self.aliens.empty()
+            self.bullets.empty()
 
-        self.create_alien_fleet()
-        self.spaceShip.center_spaceShip()
-        sleep(.6)  # pause
+            self.create_alien_fleet()
+            self.spaceShip.center_spaceShip()
+            sleep(.6)  # pause
+        else:
+            self.stats.game_active = False
+
+    def check_aliens_bottom(self):
+        screen_rect = self.screen.get_rect()
+        for alien in self.aliens.sprites():
+            if alien.rect.bottom >= screen_rect.bottom:
+                self.spaceShip_hit()
+                break
+
 
 if __name__ == '__main__':
     ai = AlienRush()
