@@ -8,6 +8,7 @@ from spaceShip import SpaceShip
 from bullet import Bullet
 from alien import Alien
 from game_stats import GameStats
+from button import Button
 
 
 class AlienRush:
@@ -34,6 +35,8 @@ class AlienRush:
         # adding aliens
         self.aliens = pygame.sprite.Group()
         self.create_alien_fleet()
+
+        self.play_button = Button(self, "Play")
 
         self.isFullScreen = False
 
@@ -103,6 +106,9 @@ class AlienRush:
         for bullet in self.bullets.sprites():
             bullet.draw_bullet()
         self.aliens.draw(self.screen)
+
+        if not self.stats.game_active:
+            self.play_button.draw_button()
 
         # making the most recent screen visible
         pygame.display.flip()
