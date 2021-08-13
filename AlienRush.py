@@ -37,6 +37,7 @@ class AlienRush:
             self._check_events()
             self.spaceShip.update()
             self.update_bullets()
+            self.update_aliens()
             self._update_screen()
 
     def _update_screen(self):
@@ -113,18 +114,34 @@ class AlienRush:
     def create_alien_fleet(self):
         """Creates a fleet of aliens"""
         alien = Alien(self)
-        alien_width = alien.rect.width
+        alien_width, alien_height = alien.rect.size
         available_space_x = self.settings.screen_width\
                             - (2 * alien_width)
-        num_aliens_x = available_space_x \
+        total_aliens_x = available_space_x \
                        // (2 * alien_width)
 
-        # creating first row of aliens
-        for alien_num in range(num_aliens_x):
-            alien = Alien(self)
-            alien.x = alien_width + (2 * alien_width * alien_num)
-            alien.rect.x = alien.x
-            self.aliens.add(alien)
+        # determining number of rows
+        spaceShip_height = self.spaceShip.rect.height
+        available_space_y = (self.settings.screen_height -
+                             (3 * alien_height) - spaceShip_height)
+        total_rows = available_space_y // (2 * alien_height)
+
+        # creating row of aliens
+        for row_num in range(total_rows):
+            for alien_num in range(total_aliens_x):
+                self.alien_fleet(alien_num, row_num)
+
+    def alien_fleet(self, alien_num, row_num):
+        alien = Alien(self)
+        alien_width, alien_height = alien.rect.size
+
+        alien.x = alien_width + (2 * alien_width * alien_num)
+        alien.rect.x = alien.x
+        alien.rect.y = alien.rect.height + 2 * alien.rect.height * row_num
+        self.aliens.add(alien)
+
+    def update_aliens(self):
+        self.aliens.update()
 
 
 if __name__ == '__main__':
