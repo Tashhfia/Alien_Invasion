@@ -1,9 +1,13 @@
 import sys
+from time import sleep
+
 import pygame
+
 from settings import Settings
 from spaceShip import SpaceShip
 from bullet import Bullet
 from alien import Alien
+from game_stats import GameStats
 
 
 class AlienRush:
@@ -21,6 +25,8 @@ class AlienRush:
 
         # setting the title of the game
         pygame.display.set_caption("Alien Rush")
+        # game stats instance
+        self.stats = GameStats(self)
         # adding spaceship
         self.spaceShip = SpaceShip(self)
         # adding bullets
@@ -167,6 +173,19 @@ class AlienRush:
         self.check_fleet_edges()
         self.aliens.update()
 
+        # Looking for alien and spaceship collision
+        if pygame.sprite.spritecollideany(self.spaceShip, self.aliens):
+            self.spaceShip_hit()
+
+    def spaceShip_hit(self):
+        self.stats.spaceShips_left -= 1
+        # Get rid of any remaining aliens and bullets
+        self.aliens.empty()
+        self.bullets.empty()
+
+        self.create_alien_fleet()
+        self.spaceShip.center_spaceShip()
+        sleep(.6)  # pause
 
 if __name__ == '__main__':
     ai = AlienRush()
